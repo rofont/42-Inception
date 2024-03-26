@@ -1,0 +1,21 @@
+version: '3'
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    networks:
+      - inception
+    ports:
+      - "443:443"
+    env_file:
+      - .env
+    restart: on-failure
+
+
+
