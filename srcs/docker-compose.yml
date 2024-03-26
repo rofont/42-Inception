@@ -1,0 +1,60 @@
+version: '3'
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx
+    build: ./requirements/nginx
+    networks:
+      - inception
+    ports:
+      - "443:443"
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
+    restart: on-failure
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    build: ./requirements/mariadb
+    networks:
+      - inception
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+    restart: unless-stopped
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    build: ./requirements/wordpress
+    networks:
+      - inception
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/rofontai/data/wordpress'
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/rofontai/data/mariadb'
+
