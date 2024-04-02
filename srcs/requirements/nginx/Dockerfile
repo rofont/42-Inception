@@ -1,13 +1,10 @@
 FROM debian:buster
 
-RUN apt update -y			\
-	&& apt install nginx openssl -y
+RUN apt update -y && apt install -y nginx openssl nano curl
 
-RUN apt install nano -y		\
-	&& apt install curl -y
+RUN mkdir -p /etc/nginx/ssl && mkdir -p /run/nginx
 
-RUN mkdir -p /etc/nginx/ssl \
-	&& openssl req -x509 -nodes \
+RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
 	-out /etc/nginx/ssl/inception.crt \
 	-keyout /etc/nginx/ssl/inception.key \
 	-subj "/C=CA/ST=QC/L=Quebec/O=42/OU=42/CN=rofontai.42.fr/UID=rofontai"
