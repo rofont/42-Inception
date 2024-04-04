@@ -1,5 +1,9 @@
 DOMAIN_NAME=rofontai.42.fr
 
+# certificates
+CERTS_=/etc/nginx/ssl/inception.crt
+CERTS1_=/etc/nginx/ssl/inception.key
+
 # MYSQL SETUP
 SQL_DATABASE=mariaDB
 SQL_USER=rofontai

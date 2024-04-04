@@ -1,5 +1,3 @@
-NAME = inception
-
 start: setup
 	cd srcs \
 	&& docker compose up --build -d
@@ -40,7 +38,7 @@ prune: ## option exec (prune --all --force)
 
 clean: down ## Stop Inception & Clean inception docker (prune -f)
 	cd srcs \
-	&& docker system prune --volume --force
+	&& docker image prune --force \
 	&& docker volume prune --force
 
 
@@ -48,8 +46,7 @@ cleanvol: ## Remove persistant datas
 	sudo rm -rf /home/rofontai/data
 
 
-fclean: down prune cleanvol ## Remove all dockers on this system & Remove persistant datas
-
+fclean: down clean prune cleanvol ## Remove all dockers on this system & Remove persistant datas
 
 re: fclean start
 

@@ -1,6 +1,6 @@
 FROM debian:buster
 
-RUN apt update -y && apt install -y nginx openssl nano curl
+RUN apt update -y && apt install -y nginx openssl
 
 RUN mkdir -p /etc/nginx/ssl && mkdir -p /run/nginx
 
